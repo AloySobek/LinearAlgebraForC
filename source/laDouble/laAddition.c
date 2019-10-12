@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vectors.c                                          :+:      :+:    :+:   */
+/*   laAddition.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vrichese <vrichese@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/22 17:29:11 by vrichese          #+#    #+#             */
-/*   Updated: 2019/09/22 18:11:20 by vrichese         ###   ########.fr       */
+/*   Created: 2019/10/12 16:44:23 by vrichese          #+#    #+#             */
+/*   Updated: 2019/10/12 18:30:56 by vrichese         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "linearTypes.h"
 
-vec1	laAddVec(void *left_operand, void *right_operand, int dimension_type)
+dvec1	laAddVec( *left_operand, void *right_operand, int dimension_type)
 {
 
 	result.x = left_operand.x + right_operand.x;
