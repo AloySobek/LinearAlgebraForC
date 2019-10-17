@@ -6,7 +6,7 @@
 /*   By: vrichese <vrichese@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 15:00:50 by vrichese          #+#    #+#             */
-/*   Updated: 2019/10/17 17:49:37 by vrichese         ###   ########.fr       */
+/*   Updated: 2019/10/17 20:18:15 by vrichese         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,7 +217,7 @@ void	laOpposite4DVector(vec4 *pSourceVector, vec4 *pResultVector)
 }
 
 /*
-** Scalar Product vector --------------------------------------------------------------
+** Scalar Product vector ---------------------------------------------------------------
 */
 
 void	laScalarProduct2DVector(vec2 *pSourceVector, float scalar, vec2 *pResultVector)
@@ -352,7 +352,7 @@ void	laCrossProduct3DVectors(vec3 *pBasisVector, vec3 *pLeftVector, vec3 *pRight
 	float	det;
 	float	subMatrix[3];
 
-	laInit3DMatrix(&matrix, pBasisVector, pLeftVector, pRightVector, (void *)0);
+	laInit3DMatrix(&matrix, pBasisVector, pLeftVector, pRightVector, (void *)0, (void *)0);
 	laGetDeterminant3DMatrix(&matrix, &det, subMatrix);
 	pResultVector->data[LA_X] = subMatrix[0];
 	pResultVector->data[LA_Y] = -subMatrix[1];

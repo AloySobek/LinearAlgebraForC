@@ -6,7 +6,7 @@
 /*   By: vrichese <vrichese@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 15:45:14 by vrichese          #+#    #+#             */
-/*   Updated: 2019/10/17 17:52:48 by vrichese         ###   ########.fr       */
+/*   Updated: 2019/10/17 21:25:44 by vrichese         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 ** Initialization matrix ------------------------------------------------------------------------------------------------
 */
 
-void	laInit2DMatrix(mat2 *pSourceMatrix, vec2 *pFirstVector, vec2 *pSecondVector, float *pInitArray)
+void	laInit2DMatrix(mat2 *pSourceMatrix, vec2 *pFirstVector, vec2 *pSecondVector, float *pInitArray, float *pOneValue)
 {
 	if (!pSourceMatrix || (!pFirstVector && !pInitArray && !pSecondVector))
 		return ;
@@ -28,6 +28,14 @@ void	laInit2DMatrix(mat2 *pSourceMatrix, vec2 *pFirstVector, vec2 *pSecondVector
 		pSourceMatrix->data[LA_X][LA_Y] = pSecondVector->data[LA_X];
 		pSourceMatrix->data[LA_Y][LA_Y] = pSecondVector->data[LA_Y];
 	}
+	else if (pOneValue)
+	{
+		pSourceMatrix->data[LA_X][LA_X] = *pOneValue;
+		pSourceMatrix->data[LA_X][LA_Y] = *pOneValue;
+
+		pSourceMatrix->data[LA_Y][LA_X] = *pOneValue;
+		pSourceMatrix->data[LA_Y][LA_Y] = *pOneValue;
+	}
 	else
 	{
 		pSourceMatrix->data[LA_X][LA_X] = pInitArray[0];
@@ -38,11 +46,11 @@ void	laInit2DMatrix(mat2 *pSourceMatrix, vec2 *pFirstVector, vec2 *pSecondVector
 	}
 }
 
-void	laInit3DMatrix(mat3 *pSourceMatrix, vec3 *pFirstVector, vec3 *pSecondVector, vec3 *pThirdVector, float *pInitArray)
+void	laInit3DMatrix(mat3 *pSourceMatrix, vec3 *pFirstVector, vec3 *pSecondVector, vec3 *pThirdVector, float *pInitArray, float *pOneValue)
 {
-	if (!pSourceMatrix || (!pFirstVector && !pInitArray && !pSecondVector && !pThirdVector))
+	if (!pSourceMatrix || (!pFirstVector && !pInitArray && !pSecondVector && !pThirdVector && !pOneValue))
 		return ;
-	if (!pInitArray)
+	if (!pInitArray && !pOneValue)
 	{
 		pSourceMatrix->data[LA_X][LA_X] = pFirstVector->data[LA_X];
 		pSourceMatrix->data[LA_Y][LA_X] = pFirstVector->data[LA_Y];
@@ -55,6 +63,20 @@ void	laInit3DMatrix(mat3 *pSourceMatrix, vec3 *pFirstVector, vec3 *pSecondVector
 		pSourceMatrix->data[LA_X][LA_Z] = pThirdVector->data[LA_X];
 		pSourceMatrix->data[LA_Y][LA_Z] = pThirdVector->data[LA_Y];
 		pSourceMatrix->data[LA_Z][LA_Z] = pThirdVector->data[LA_Z];
+	}
+	else if (pOneValue)
+	{
+		pSourceMatrix->data[LA_X][LA_X] = *pOneValue;
+		pSourceMatrix->data[LA_X][LA_Y] = *pOneValue;
+		pSourceMatrix->data[LA_X][LA_Z] = *pOneValue;
+
+		pSourceMatrix->data[LA_Y][LA_X] = *pOneValue;
+		pSourceMatrix->data[LA_Y][LA_Y] = *pOneValue;
+		pSourceMatrix->data[LA_Y][LA_Z] = *pOneValue;
+
+		pSourceMatrix->data[LA_Z][LA_X] = *pOneValue;
+		pSourceMatrix->data[LA_Z][LA_Y] = *pOneValue;
+		pSourceMatrix->data[LA_Z][LA_Z] = *pOneValue;
 	}
 	else
 	{
@@ -72,7 +94,7 @@ void	laInit3DMatrix(mat3 *pSourceMatrix, vec3 *pFirstVector, vec3 *pSecondVector
 	}
 }
 
-void	laInit4DMatrix(mat4 *pSourceMatrix, vec4 *pFirstVector, vec4 *pSecondVector, vec4 *pThirdVector, vec4 *pFourthVector, float *pInitArray)
+void	laInit4DMatrix(mat4 *pSourceMatrix, vec4 *pFirstVector, vec4 *pSecondVector, vec4 *pThirdVector, vec4 *pFourthVector, float *pInitArray, float *pOneValue)
 {
 	if (!pSourceMatrix || (!pFirstVector && !pInitArray && !pSecondVector && !pThirdVector))
 		return ;
@@ -97,6 +119,28 @@ void	laInit4DMatrix(mat4 *pSourceMatrix, vec4 *pFirstVector, vec4 *pSecondVector
 		pSourceMatrix->data[LA_Y][LA_W] = pFourthVector->data[LA_Y];
 		pSourceMatrix->data[LA_Z][LA_W] = pFourthVector->data[LA_Z];
 		pSourceMatrix->data[LA_W][LA_W] = pFourthVector->data[LA_W];
+	}
+	else if (pOneValue)
+	{
+		pSourceMatrix->data[LA_X][LA_X] = *pOneValue;
+		pSourceMatrix->data[LA_X][LA_Y] = *pOneValue;
+		pSourceMatrix->data[LA_X][LA_Z] = *pOneValue;
+		pSourceMatrix->data[LA_X][LA_Z] = *pOneValue;
+
+		pSourceMatrix->data[LA_Y][LA_X] = *pOneValue;
+		pSourceMatrix->data[LA_Y][LA_Y] = *pOneValue;
+		pSourceMatrix->data[LA_Y][LA_Z] = *pOneValue;
+		pSourceMatrix->data[LA_Y][LA_Z] = *pOneValue;
+
+		pSourceMatrix->data[LA_Z][LA_X] = *pOneValue;
+		pSourceMatrix->data[LA_Z][LA_Y] = *pOneValue;
+		pSourceMatrix->data[LA_Z][LA_Z] = *pOneValue;
+		pSourceMatrix->data[LA_Z][LA_W] = *pOneValue;
+
+		pSourceMatrix->data[LA_W][LA_X] = *pOneValue;
+		pSourceMatrix->data[LA_W][LA_Y] = *pOneValue;
+		pSourceMatrix->data[LA_W][LA_Z] = *pOneValue;
+		pSourceMatrix->data[LA_W][LA_W] = *pOneValue;
 	}
 	else
 	{
@@ -321,23 +365,124 @@ void	laGetDeterminant4DMatrix(mat4 *pSourceMatrix, float *pResult, float *pSubMa
 }
 
 /*
+** Multiply matrix ----------------------------------------------------------------------------------
+*/
+
+void	laMul3Dmatrix(mat3 *pLeftOperand, mat3 *pRightOperand, mat3 *pResultMatrix)
+{
+	float	total;
+	int		iter;
+	int		x;
+	int		y;
+
+	x = -1;
+	while (++x < 3 && (y = -1))
+		while (++y < 3 && (iter = -1) && (total = 0.0f) > -1)
+		{
+			while (++iter < 3)
+				total += pLeftOperand->data[y][iter] * pRightOperand->data[iter][x];
+			pResultMatrix->data[y][x] = total;
+		}
+}
+
+/*
+** Some Transoformation matrix ----------------------------------------------------------------------
+*/
+
+void	laXaxisRotation(mat3 *pSourceMatrix, float *pAngle)
+{
+	float null;
+
+	if (!pSourceMatrix || !pAngle)
+		return ;
+	null = 0.0f;
+	laInit3DMatrix(pSourceMatrix, (void *)0, (void *)0, (void *)0, (void *)0, &null);
+	pSourceMatrix->data[LA_Y][LA_Y] = cosf(*pAngle);
+	pSourceMatrix->data[LA_Z][LA_Y] = -sinf(*pAngle);
+	pSourceMatrix->data[LA_Y][LA_Z] = sinf(*pAngle);
+	pSourceMatrix->data[LA_Z][LA_Z] = cos(*pAngle);
+	pSourceMatrix->data[LA_X][LA_X] = 1.0f;
+}
+
+void	laYaxisRotation(mat3 *pSourceMatrix, float *pAngle)
+{
+	float null;
+
+	if (!pSourceMatrix || !pAngle)
+		return ;
+	null = 0.0f;
+	laInit3DMatrix(pSourceMatrix, (void *)0, (void *)0, (void *)0, (void *)0, &null);
+	pSourceMatrix->data[LA_X][LA_X] = cosf(*pAngle);
+	pSourceMatrix->data[LA_Z][LA_X] = sinf(*pAngle);
+	pSourceMatrix->data[LA_X][LA_Z] = -sinf(*pAngle);
+	pSourceMatrix->data[LA_Z][LA_Z] = cosf(*pAngle);
+	pSourceMatrix->data[LA_Y][LA_Y] = 1.0f;
+}
+
+void	laZaxisRotation(mat3 *pSourceMatrix, float *pAngle)
+{
+	float null;
+
+	if (!pSourceMatrix || !pAngle)
+		return ;
+	null = 0.0f;
+	laInit3DMatrix(pSourceMatrix, (void *)0, (void *)0, (void *)0, (void *)0, &null);
+	pSourceMatrix->data[LA_X][LA_X] = cosf(*pAngle);
+	pSourceMatrix->data[LA_Y][LA_X] = -sinf(*pAngle);
+	pSourceMatrix->data[LA_X][LA_Y] = cosf(*pAngle);
+	pSourceMatrix->data[LA_Y][LA_Y] = sinf(*pAngle);
+	pSourceMatrix->data[LA_Z][LA_Z] = 1.0f;
+}
+
+void	laRotate(mat3 *pSourceMatrix, vec3 *pRotateVector)
+{
+	mat3	xRot;
+	mat3	yRot;
+	mat3	zRot;
+	mat3	xyzRot;
+	float	null;
+
+	null = 0.0f;
+	laXaxisRotation(&xRot, &pRotateVector->data[LA_X]);
+	laYaxisRotation(&yRot, &pRotateVector->data[LA_Y]);
+	laZaxisRotation(&zRot, &pRotateVector->data[LA_Z]);
+	laInit3DMatrix(&xyzRot, (void *)0, (void *)0, (void *)0, (void *)0, &null);
+	laMul3Dmatrix(&xRot, &yRot, &xyzRot);
+	laMul3Dmatrix(&zRot, &xyzRot, &xyzRot);
+	for (int y = 0; y < 3; ++y)
+	{
+		for (int x = 0; x < 3; ++x)
+			printf("%f ", xyzRot.data[y][x]);
+		printf("\n");
+	}
+	exit(1);
+	laMul3Dmatrix(&xyzRot, pSourceMatrix, pSourceMatrix);
+}
+
+/*
 ** For testing ---------------------------------------------------------------------------------------
 */
 
-// int main(int argc, char **argv)
-// {
-// 	vec4 one;
-// 	vec4 two;
-// 	vec4 three;
-// 	vec4 four;
-// 	mat4 matrix;
-// 	float result;
+int main(int argc, char **argv)
+{
+	vec3 one;
+	vec3 two;
+	vec3 three;
+	vec3 rot;
+	mat3 matrix;
+	float test = 0.0f;
 
-// 	laInit4DVector(&one, 4.0f, 1.0f, 3.0f, 1.0f);
-// 	laInit4DVector(&two, 5.0f, 4.0f, 1.0f, 1.0f);
-// 	laInit4DVector(&three, 3.0f, 8.0f, 50.0f, 1.0f);
-// 	laInit4DVector(&four, 3.0f, 7.0f, 4.0f, 1.0f);
-// 	laInit4DMatrix(&matrix, &one, &two, &three, &four, (void *)0);
-// 	laGetDeterminant4DMatrix(&matrix, &result, (void *)0);
-// 	printf("%f\n", result);
-// }
+	laInit3DVector(&one, 1.0f, 0.0f, 0.0f);
+	laInit3DVector(&two, 0.0f, 1.0f, 0.0f);
+	laInit3DVector(&three, 0.0f, 0.0f, 1.0f);
+	laInit3DVector(&rot, 30.0f, 0.0f, 0.0f);
+	laInit3DMatrix(&matrix, &one, &two, &three, (void *)0, (void *)0);
+	laRotate(&matrix, &rot);
+	for (int y = 0; y < 3; ++y)
+	{
+		for (int x = 0; x < 3; ++x)
+			printf("%f ", matrix.data[y][x]);
+		printf("\n");
+	}
+	return (0);
+}
