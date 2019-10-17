@@ -5,25 +5,56 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vrichese <vrichese@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/07 16:58:32 by vrichese          #+#    #+#             */
-/*   Updated: 2019/10/12 16:41:10 by vrichese         ###   ########.fr       */
+/*   Created: 2019/10/12 16:33:32 by vrichese          #+#    #+#             */
+/*   Updated: 2019/10/16 20:23:40 by vrichese         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LINEARTYPES_H
-# define LINEARTYPES_H
+#ifndef LAFLOAT_H
+# define LAFLOAT_H
 
-# include "laUnsignedChar.h"
-# include "laDouble.h"
-# include "laFloat.h"
+# include "math.h"
 
-# define LA_BYTE		1
-# define LA_UBYTE		2
-# define LA_SHORT		3
-# define LA_USHORT		4
-# define LA_INT			5
-# define LA_UINT		6
-# define LA_FLOAT		7
-# define LA_DOUBLE		8
+typedef enum	basis_e
+{
+	LA_X,
+	LA_Y,
+	LA_Z,
+	LA_W,
+	LA_MAX_DIMENSION,
+	LA_2D		= 2,
+	LA_3D		= 3,
+	LA_4D		= 4
+}				basis_t;
+
+typedef	struct	s_vec2
+{
+	float		data[LA_2D];
+}				vec2;
+
+typedef struct	s_vec3
+{
+	float		data[LA_3D];
+}				vec3;
+
+typedef struct	s_fvec4
+{
+	float		data[LA_4D];
+}				vec4;
+
+typedef struct	s_fmat2
+{
+	float		data[LA_2D][LA_2D];
+}				mat2;
+
+typedef struct	s_fmat3
+{
+	float		data[LA_3D][LA_3D];
+}				mat3;
+
+typedef struct	s_fmat4
+{
+	float		data[LA_4D][LA_4D];
+}				mat4;
 
 #endif
