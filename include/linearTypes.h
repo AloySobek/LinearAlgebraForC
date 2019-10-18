@@ -6,14 +6,15 @@
 /*   By: vrichese <vrichese@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 16:33:32 by vrichese          #+#    #+#             */
-/*   Updated: 2019/10/16 20:23:40 by vrichese         ###   ########.fr       */
+/*   Updated: 2019/10/18 16:35:02 by vrichese         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LAFLOAT_H
 # define LAFLOAT_H
 
-# include "math.h"
+# include <stdlib.h>
+# include <math.h>
 
 typedef enum	basis_e
 {

@@ -6,7 +6,7 @@
 /*   By: vrichese <vrichese@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 16:50:45 by vrichese          #+#    #+#             */
-/*   Updated: 2019/10/17 19:15:48 by vrichese         ###   ########.fr       */
+/*   Updated: 2019/10/18 18:26:22 by vrichese         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,41 +15,41 @@
 
 #include "linearTypes.h"
 
-void	laInit2DVector(vec2 *pSourceVector, float x, float y);
-void	laInit3DVector(vec3 *pSourceVector, float x, float y, float z);
-void	laInit4DVector(vec4 *pSourceVector, float x, float y, float z, float w);
+vec2	laInit2DVector(vec2 *pSourceVector, float x, float y, float *pInitArray);
+vec3	laInit3DVector(vec3 *pSourceVector, float x, float y, float z, float *pInitArray);
+vec4	laInit4DVector(vec4 *pSourceVector, float x, float y, float z, float w, float *pInitArray);
 
-void	laAdd2DVectors(vec2 *leftOperand, vec2 *rightOperand, vec2 *resultVector);
-void	laAdd3DVectors(vec3 *leftOperand, vec3 *rightOperand, vec3 *resultVector);
-void	laAdd4DVectors(vec4 *leftOperand, vec4 *rightOperand, vec4 *resultVector);
+vec2	laAdd2DVectors(vec2 *leftOperand, vec2 *rightOperand, vec2 *resultVector);
+vec3	laAdd3DVectors(vec3 *leftOperand, vec3 *rightOperand, vec3 *resultVector);
+vec4	laAdd4DVectors(vec4 *leftOperand, vec4 *rightOperand, vec4 *resultVector);
 
-void	laSub2DVectors(vec2 *leftOperand, vec2 *rightOperand, vec2 *resultVector);
-void	laSub3DVectors(vec3 *leftOperand, vec3 *rightOperand, vec3 *resultVector);
-void	laSub4DVectors(vec4 *leftOperand, vec4 *rightOperand, vec4 *resultVector);
+vec2	laSub2DVectors(vec2 *leftOperand, vec2 *rightOperand, vec2 *resultVector);
+vec3	laSub3DVectors(vec3 *leftOperand, vec3 *rightOperand, vec3 *resultVector);
+vec4	laSub4DVectors(vec4 *leftOperand, vec4 *rightOperand, vec4 *resultVector);
 
-void	laGetMagnitude2DVector(vec2 *pSourceVector, float *pResult);
-void	laGetMagnitude3DVector(vec3 *pSourceVector, float *pResult);
-void	laGetMagnitude4DVector(vec4 *pSourceVector, float *pResult);
+float	laGetMagnitude2DVector(vec2 *pSourceVector, float *pResult);
+float	laGetMagnitude3DVector(vec3 *pSourceVector, float *pResult);
+float	laGetMagnitude4DVector(vec4 *pSourceVector, float *pResult);
 
-void	laNormalize2DVector(vec2 *pSourceVector, vec2 *pResultVector);
-void	laNormalize3DVector(vec3 *pSourceVector, vec3 *pResultVector);
-void	laNormalize4DVector(vec4 *pSourceVector, vec4 *pResultVector);
+vec2	laNormalize2DVector(vec2 *pSourceVector, vec2 *pResultVector);
+vec3	laNormalize3DVector(vec3 *pSourceVector, vec3 *pResultVector);
+vec4	laNormalize4DVector(vec4 *pSourceVector, vec4 *pResultVector);
 
-void	laOpposite2DVector(vec2 *pSourceVector, vec2 *pResultVector);
-void	laOpposite3DVector(vec3 *pSourceVector, vec3 *pResultVector);
-void	laOpposite4DVector(vec4 *pSourceVector, vec4 *pResultVector);
+vec2	laOpposite2DVector(vec2 *pSourceVector, vec2 *pResultVector);
+vec3	laOpposite3DVector(vec3 *pSourceVector, vec3 *pResultVector);
+vec4	laOpposite4DVector(vec4 *pSourceVector, vec4 *pResultVector);
 
-void	laScalarProduct2DVector(vec2 *pSourceVector, float scalar, vec2 *pResultVector);
-void	laScalarProduct3DVector(vec3 *pSourceVector, float scalar, vec3 *pResultVector);
-void	laScalarProduct4DVector(vec4 *pSourceVector, float scalar, vec4 *pResultVector);
+vec2	laScalarProduct2DVector(vec2 *pSourceVector, float scalar, vec2 *pResultVector);
+vec3	laScalarProduct3DVector(vec3 *pSourceVector, float scalar, vec3 *pResultVector);
+vec4	laScalarProduct4DVector(vec4 *pSourceVector, float scalar, vec4 *pResultVector);
 
-void	laDotProduct2DVectors(vec2 *pLeftVector, vec2 *pRightVector, float *pResult);
-void	laDotProduct3DVectors(vec3 *pLeftVector, vec3 *pRightVector, float *pResult);
-void	laDotProduct4DVectors(vec4 *pLeftVector, vec4 *pRightVector, float *pResult);
+float	laDotProduct2DVectors(vec2 *pLeftVector, vec2 *pRightVector, float *pResult);
+float	laDotProduct3DVectors(vec3 *pLeftVector, vec3 *pRightVector, float *pResult);
+float	laDotProduct4DVectors(vec4 *pLeftVector, vec4 *pRightVector, float *pResult);
 
-void	laGetCosBetween2DVectors(vec2 *pLeftVector, vec2 *pRightVector, float *pResult);
-void	laGetCosBetween3DVectors(vec3 *pLeftVector, vec3 *pRightVector, float *pResult);
-void	laGetCosBetween4DVectors(vec4 *pLeftVector, vec4 *pRightVector, float *pResult);
+float	laGetCosBetween2DVectors(vec2 *pLeftVector, vec2 *pRightVector, float *pResult);
+float	laGetCosBetween3DVectors(vec3 *pLeftVector, vec3 *pRightVector, float *pResult);
+float	laGetCosBetween4DVectors(vec4 *pLeftVector, vec4 *pRightVector, float *pResult);
 
 void	laCrossProduct3DVectors(vec3 *pBasisVector, vec3 *pLeftVector, vec3 *pRightVector, vec3 *pResultVector);
 
