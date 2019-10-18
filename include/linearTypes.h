@@ -6,7 +6,7 @@
 /*   By: vrichese <vrichese@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 16:33:32 by vrichese          #+#    #+#             */
-/*   Updated: 2019/10/18 16:35:02 by vrichese         ###   ########.fr       */
+/*   Updated: 2019/10/18 20:18:50 by vrichese         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdlib.h>
 # include <math.h>
+# include <stdio.h>
 
 typedef enum	basis_e
 {

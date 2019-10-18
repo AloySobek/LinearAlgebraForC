@@ -6,7 +6,7 @@
 /*   By: vrichese <vrichese@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 16:50:45 by vrichese          #+#    #+#             */
-/*   Updated: 2019/10/18 18:26:22 by vrichese         ###   ########.fr       */
+/*   Updated: 2019/10/18 20:19:11 by vrichese         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ float	laGetCosBetween4DVectors(vec4 *pLeftVector, vec4 *pRightVector, float *pRe
 
 void	laCrossProduct3DVectors(vec3 *pBasisVector, vec3 *pLeftVector, vec3 *pRightVector, vec3 *pResultVector);
 
-void	laInit2DMatrix(mat2 *pSourceMatrix, vec2 *pFirstVector, vec2 *pSecondVector, float *pInitArray, float *pOnevalue);
-void	laInit3DMatrix(mat3 *pSourceMatrix, vec3 *pFirstVector, vec3 *pSecondVector, vec3 *pThirdVector, float *pInitArray, float *pOneValue);
-void	laInit4DMatrix(mat4 *pSourceMatrix, vec4 *pFirstVector, vec4 *pSecondVector, vec4 *pThirdVector, vec4 *pFourthVector, float *pInitArray, float *pOneValue);
+mat2	laInit2DMatrix(mat2 *pSourceMatrix, vec2 *pFirstVector, vec2 *pSecondVector, float *pInitArray, float *pOnevalue);
+mat3	laInit3DMatrix(mat3 *pSourceMatrix, vec3 *pFirstVector, vec3 *pSecondVector, vec3 *pThirdVector, float *pInitArray, float *pOneValue);
+mat4	laInit4DMatrix(mat4 *pSourceMatrix, vec4 *pFirstVector, vec4 *pSecondVector, vec4 *pThirdVector, vec4 *pFourthVector, float *pInitArray, float *pOneValue);
 
 void	laAdd2DMatrix(mat2 *pLeftOperand, mat2 *pRightOperand, mat2 *pResultMatrix);
 void	laAdd3DMatrix(mat3 *pLeftOperand, mat3 *pRightOperand, mat3 *pResultMatrix);

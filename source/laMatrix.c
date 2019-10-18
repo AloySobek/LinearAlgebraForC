@@ -6,7 +6,7 @@
 /*   By: vrichese <vrichese@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 15:45:14 by vrichese          #+#    #+#             */
-/*   Updated: 2019/10/18 18:15:04 by vrichese         ###   ########.fr       */
+/*   Updated: 2019/10/18 20:17:57 by vrichese         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,68 +16,87 @@
 ** Initialization matrix ------------------------------------------------------------------------------------------------
 */
 
-void	laInit2DMatrix(mat2 *pSourceMatrix, vec2 *pFirstVector, vec2 *pSecondVector, float *pInitArray, float *pOneValue)
+mat2		laInit2DMatrix(mat2 *pSourceMatrix, vec2 *pFirstVector, vec2 *pSecondVector, float *pInitArray, float *pOneValue)
 {
-	if (!pSourceMatrix)
-		return ;
+	mat2	newMatrix;
+
 	if (pFirstVector && pSecondVector)
 		for (int y = 0; y < LA_2D; ++y)
 		{
-			pSourceMatrix->data[y][LA_X] = pFirstVector->data[y];
-			pSourceMatrix->data[y][LA_Y] = pSecondVector->data[y];
+			newMatrix.data[y][LA_X] = pFirstVector->data[y];
+			newMatrix.data[y][LA_Y] = pSecondVector->data[y];
 		}
 	else if (pInitArray)
 		for (int y = 0; y < LA_2D; ++y)
 			for (int x = 0; x < LA_2D; ++x)
-				pSourceMatrix->data[y][x] = pInitArray[x + (y * LA_2D)];
+				newMatrix.data[y][x] = pInitArray[x + (y * LA_2D)];
 	else if (pOneValue)
 		for (int y = 0; y < LA_2D; ++y)
 			for(int x = 0; x < LA_2D; ++x)
-				pSourceMatrix->data[y][x] = *pOneValue;
+				newMatrix.data[y][x] = *pOneValue;
+	if (pSourceMatrix)
+	{
+		*pSourceMatrix = newMatrix;
+		return (*pSourceMatrix);
+	}
+	return (newMatrix);
 }
 
-void	laInit3DMatrix(mat3 *pSourceMatrix, vec3 *pFirstVector, vec3 *pSecondVector, vec3 *pThirdVector, float *pInitArray, float *pOneValue)
+mat3		laInit3DMatrix(mat3 *pSourceMatrix, vec3 *pFirstVector, vec3 *pSecondVector,
+						vec3 *pThirdVector, float *pInitArray, float *pOneValue)
 {
-	if (!pSourceMatrix)
-		return ;
+	mat3	newMatrix;
+
 	if (pFirstVector && pSecondVector && pThirdVector)
 		for (int y = 0; y < LA_3D; ++y)
 		{
-			pSourceMatrix->data[y][LA_X] = pFirstVector->data[y];
-			pSourceMatrix->data[y][LA_Y] = pSecondVector->data[y];
-			pSourceMatrix->data[y][LA_Z] = pThirdVector->data[y];
+			newMatrix.data[y][LA_X] = pFirstVector->data[y];
+			newMatrix.data[y][LA_Y] = pSecondVector->data[y];
+			newMatrix.data[y][LA_Z] = pThirdVector->data[y];
 		}
 	else if (pInitArray)
 		for (int y = 0; y < LA_3D; ++y)
 			for (int x = 0; x < LA_3D; ++x)
-				pSourceMatrix->data[y][x] = pInitArray[x + (y * LA_3D)];
+				newMatrix.data[y][x] = pInitArray[x + (y * LA_3D)];
 	else if (pOneValue)
 		for (int y = 0; y < LA_3D; ++y)
 			for(int x = 0; x < LA_3D; ++x)
-				pSourceMatrix->data[y][x] = *pOneValue;
+				newMatrix.data[y][x] = *pOneValue;
+	if (pSourceMatrix)
+	{
+		*pSourceMatrix = newMatrix;
+		return (*pSourceMatrix);
+	}
+	return (newMatrix);
 }
 
-void	laInit4DMatrix(mat4 *pSourceMatrix, vec4 *pFirstVector, vec4 *pSecondVector,
+mat4		laInit4DMatrix(mat4 *pSourceMatrix, vec4 *pFirstVector, vec4 *pSecondVector,
 						vec4 *pThirdVector, vec4 *pFourthVector, float *pInitArray, float *pOneValue)
 {
-	if (!pSourceMatrix)
-		return ;
+	mat4	newMatrix;
+
 	if (pFirstVector && pSecondVector && pThirdVector && pFourthVector)
 		for (int y = 0; y < 4; ++y)
 		{
-			pSourceMatrix->data[y][LA_X] = pFirstVector->data[y];
-			pSourceMatrix->data[y][LA_Y] = pSecondVector->data[y];
-			pSourceMatrix->data[y][LA_Z] = pThirdVector->data[y];
-			pSourceMatrix->data[y][LA_W] = pFourthVector->data[y];
+			newMatrix.data[y][LA_X] = pFirstVector->data[y];
+			newMatrix.data[y][LA_Y] = pSecondVector->data[y];
+			newMatrix.data[y][LA_Z] = pThirdVector->data[y];
+			newMatrix.data[y][LA_W] = pFourthVector->data[y];
 		}
 	else if (pOneValue)
 		for (int y = 0; y < LA_4D; ++y)
 			for (int x = 0; x < LA_4D; ++x)
-				pSourceMatrix->data[y][x] = pInitArray[x + (y * LA_4D)];
+				newMatrix.data[y][x] = pInitArray[x + (y * LA_4D)];
 	else if (pOneValue)
 		for (int y = 0; y < LA_4D; ++y)
 			for (int x = 0; x < LA_4D; ++x)
-				pSourceMatrix->data[y][x] = *pOneValue;
+				newMatrix.data[y][x] = *pOneValue;
+	if (pSourceMatrix)
+	{
+		*pSourceMatrix = newMatrix;
+		return (*pSourceMatrix);
+	}
+	return (newMatrix);
 }
 
 /*
@@ -409,13 +428,6 @@ void	laRotate(mat3 *pSourceMatrix, vec3 *pRotateVector)
 	laInit3DMatrix(&xyzRot, NULL, NULL, NULL, NULL, &null);
 	laMul3Dmatrix(&xRot, &yRot, &xyzRot);
 	laMul3Dmatrix(&zRot, &xyzRot, &xyzRot);
-	for (int y = 0; y < 3; ++y)
-	{
-		for (int x = 0; x < 3; ++x)
-			printf("%f ", xyzRot.data[y][x]);
-		printf("\n");
-	}
-	exit(1);
 	laMul3Dmatrix(&xyzRot, pSourceMatrix, pSourceMatrix);
 }
 

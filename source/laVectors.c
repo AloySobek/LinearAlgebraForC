@@ -6,7 +6,7 @@
 /*   By: vrichese <vrichese@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 15:00:50 by vrichese          #+#    #+#             */
-/*   Updated: 2019/10/18 18:27:27 by vrichese         ###   ########.fr       */
+/*   Updated: 2019/10/18 20:19:16 by vrichese         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -553,17 +553,25 @@ float	laGetCosBetween4DVectors(vec4 *pLeftVector, vec4 *pRightVector, float *pRe
 ** Cross Product vector ---------------------------------------------------------------
 */
 
-void	laCrossProduct3DVectors(vec3 *pBasisVector, vec3 *pLeftVector, vec3 *pRightVector, vec3 *pResultVector)
+void		laCrossProduct3DVectors(vec3 *pBasisVector, vec3 *pLeftVector, vec3 *pRightVector, vec3 *pResultVector)
 {
 	mat3	matrix;
+	vec3	basisVec;
 	float	det;
 	float	subMatrix[3];
 
-	laInit3DMatrix(&matrix, pBasisVector, pLeftVector, pRightVector, (void *)0, (void *)0);
+	if (!pLeftVector || !pRightVector)
+		return ;
+	if (!pBasisVector)
+		laInit3DVector(&basisVec, 1.0f, 1.0f, 1.0f, NULL);
+	else
+		basisVec = *pBasisVector;
+	laInit3DMatrix(&matrix, &basisVec, pLeftVector, pRightVector, (void *)0, (void *)0);
 	laGetDeterminant3DMatrix(&matrix, &det, subMatrix);
 	pResultVector->data[LA_X] = subMatrix[0];
 	pResultVector->data[LA_Y] = -subMatrix[1];
 	pResultVector->data[LA_Z] = subMatrix[2];
+
 }
 
 /*
