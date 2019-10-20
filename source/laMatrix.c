@@ -6,7 +6,7 @@
 /*   By: vrichese <vrichese@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 15:45:14 by vrichese          #+#    #+#             */
-/*   Updated: 2019/10/18 20:17:57 by vrichese         ###   ########.fr       */
+/*   Updated: 2019/10/20 18:08:42 by vrichese         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 ** Initialization matrix ------------------------------------------------------------------------------------------------
 */
 
-mat2		laInit2DMatrix(mat2 *pSourceMatrix, vec2 *pFirstVector, vec2 *pSecondVector, float *pInitArray, float *pOneValue)
+mat2		laInit2DMatrix(mat2 *pSourceMatrix, vec2 *pFirstVector, vec2 *pSecondVector,
+						float *pInitArray, float *pOneValue)
 {
 	mat2	newMatrix;
 
@@ -103,7 +104,7 @@ mat4		laInit4DMatrix(mat4 *pSourceMatrix, vec4 *pFirstVector, vec4 *pSecondVecto
 ** Copy matrix ----------------------------------------------------------------------------------------
 */
 
-mat2	laCopy2DMatrix(mat2 *pSourceMatrix, mat2 *pResultMatrix)
+mat2		laCopy2DMatrix(mat2 *pSourceMatrix, mat2 *pResultMatrix)
 {
 	mat2	newMatrix;
 
@@ -254,85 +255,107 @@ void	laSub4DMatrix(mat4 *pLeftOperand, mat4 *pRightOperand, mat4 *pResultMatrix)
 ** Determinant matrix ---------------------------------------------------------------------------------
 */
 
-void	laGetDeterminant2DMatrix(mat2 *pSourceMatrix, float *pResult)
+float		laGetDeterminant2DMatrix(mat2 *pSourceMatrix, float *pResult)
 {
-	if (!pSourceMatrix || !pResult)
-		return ;
-	*pResult = pSourceMatrix->data[LA_X][LA_X] * pSourceMatrix->data[LA_Y][LA_Y]
-				- pSourceMatrix->data[LA_X][LA_Y] * pSourceMatrix->data[LA_Y][LA_X];
+	float	res;
+
+	res = 0.0f;
+	if (!pSourceMatrix)
+		return (res);
+	res = pSourceMatrix->data[LA_X][LA_X] * pSourceMatrix->data[LA_Y][LA_Y]
+			- pSourceMatrix->data[LA_X][LA_Y] * pSourceMatrix->data[LA_Y][LA_X];
+	if (pResult)
+	{
+		*pResult = res;
+		return (*pResult);
+	}
+	return (res);
 }
 
-void	laGetDeterminant3DMatrix(mat3 *pSourceMatrix, float *pResult, float *pSubMatrixArray)
+float		laGetDeterminant3DMatrix(mat3 *pSourceMatrix, float *pResult, float *pSubMatrixArray)
 {
 	mat2	topSubMatrix;
 	mat2	middleSubMatrix;
 	mat2	bottomSubMatrix;
-	float	firstResult;
-	float	secondResult;
-	float	thirdResult;
-	int		y;
-	int		x;
+	float	res;
 
-	y = -1;
-	while (++y < 2 && (x = -1))
-		while (++x < 2)
+	res = 0.0f;
+	for(int y = 0; y < 2; ++y)
+		for (int x = 0; x < 2; ++x)
 		{
 			topSubMatrix.data[y][x]		= pSourceMatrix->data[y][x + 1];
 			bottomSubMatrix.data[y][x]	= pSourceMatrix->data[y + 1][x + 1];
 			middleSubMatrix.data[y][x]	= pSourceMatrix->data[y + (y % 2)][x + 1];
 		}
-	laGetDeterminant2DMatrix(&bottomSubMatrix, &firstResult);
-	laGetDeterminant2DMatrix(&middleSubMatrix, &secondResult);
-	laGetDeterminant2DMatrix(&topSubMatrix, &thirdResult);
-	*pResult = pSourceMatrix->data[LA_X][LA_X] * firstResult
-					+ -pSourceMatrix->data[LA_Y][LA_X] * secondResult
-						+ pSourceMatrix->data[LA_Z][LA_X] * thirdResult;
+	res = pSourceMatrix->data[LA_X][LA_X] * laGetDeterminant2DMatrix(&middleSubMatrix, NULL)
+			+ -pSourceMatrix->data[LA_Y][LA_X] * laGetDeterminant2DMatrix(&bottomSubMatrix, NULL)
+				+ pSourceMatrix->data[LA_Z][LA_X] * laGetDeterminant2DMatrix(&topSubMatrix, NULL);
 	if (pSubMatrixArray)
 	{
-		pSubMatrixArray[0] = firstResult;
-		pSubMatrixArray[1] = secondResult;
-		pSubMatrixArray[2] = thirdResult;
+		pSubMatrixArray[0] = laGetDeterminant2DMatrix(&middleSubMatrix, NULL);
+		pSubMatrixArray[1] = laGetDeterminant2DMatrix(&bottomSubMatrix, NULL);
+		pSubMatrixArray[2] = laGetDeterminant2DMatrix(&topSubMatrix, NULL);
 	}
-}
-
-void	laGetDeterminant4DMatrix(mat4 *pSourceMatrix, float *pResult, float *pSubMatrixArray)
-{
-	mat3	topSubMatrix;
-	mat3	middleSubFirstMatrix;
-	mat3	middleSubSecondMatrix;
-	mat3	bottomSubMatrix;
-	float	firstResult;
-	float	secondResult;
-	float	thirdResult;
-	float	fourthResult;
-	int		x;
-	int		y;
-
-	y = -1;
-	while (++y < 3 && (x = - 1))
-		while(++x < 3)
-		{
-			topSubMatrix.data[y][x]				= pSourceMatrix->data[y][x + 1];
-			middleSubFirstMatrix.data[y][x]		= pSourceMatrix->data[y + (y > 0)][x + 1];
-			middleSubSecondMatrix.data[y][x]	= pSourceMatrix->data[y + (y > 1)][x + 1];
-			bottomSubMatrix.data[y][x]			= pSourceMatrix->data[y + 1][x + 1];
-		}
-	laGetDeterminant3DMatrix(&bottomSubMatrix, &firstResult, NULL);
-	laGetDeterminant3DMatrix(&middleSubFirstMatrix, &secondResult, NULL);
-	laGetDeterminant3DMatrix(&middleSubSecondMatrix, &thirdResult, NULL);
-	laGetDeterminant3DMatrix(&topSubMatrix, &fourthResult, NULL);
-	*pResult = pSourceMatrix->data[LA_X][LA_X] * firstResult
-				+ -pSourceMatrix->data[LA_Y][LA_X] * secondResult
-					+ pSourceMatrix->data[LA_Z][LA_X] * thirdResult
-						+ -pSourceMatrix->data[LA_W][LA_X] * fourthResult;
-	if (pSubMatrixArray)
+	if (pResult)
 	{
-		pSubMatrixArray[0] = firstResult;
-		pSubMatrixArray[1] = secondResult;
-		pSubMatrixArray[2] = thirdResult;
-		pSubMatrixArray[3] = fourthResult;
+		*pResult = res;
+		return (*pResult);
 	}
+	return (res);
 }
+
+// float	laGetDeterminant4DMatrix(mat4 *pSourceMatrix, float *pResult, float *pSubMatrixArray)
+// {
+// 	mat3	topSubMatrix;
+// 	mat3	middleSubFirstMatrix;
+// 	mat3	middleSubSecondMatrix;
+// 	mat3	bottomSubMatrix;
+// 	float	firstResult;
+// 	float	secondResult;
+// 	float	thirdResult;
+// 	float	fourthResult;
+// 	int		x;
+// 	int		y;
+
+// 	y = -1;
+// 	while (++y < 3 && (x = - 1))
+// 		while(++x < 3)
+// 		{
+// 			topSubMatrix.data[y][x]				= pSourceMatrix->data[y][x + 1];
+// 			middleSubFirstMatrix.data[y][x]		= pSourceMatrix->data[y + (y > 0)][x + 1];
+// 			middleSubSecondMatrix.data[y][x]	= pSourceMatrix->data[y + (y > 1)][x + 1];
+// 			bottomSubMatrix.data[y][x]			= pSourceMatrix->data[y + 1][x + 1];
+// 		}
+// 	laGetDeterminant3DMatrix(&bottomSubMatrix, &firstResult, NULL);
+// 	laGetDeterminant3DMatrix(&middleSubFirstMatrix, &secondResult, NULL);
+// 	laGetDeterminant3DMatrix(&middleSubSecondMatrix, &thirdResult, NULL);
+// 	laGetDeterminant3DMatrix(&topSubMatrix, &fourthResult, NULL);
+// 	*pResult = pSourceMatrix->data[LA_X][LA_X] * firstResult
+// 				+ -pSourceMatrix->data[LA_Y][LA_X] * secondResult
+// 					+ pSourceMatrix->data[LA_Z][LA_X] * thirdResult
+// 						+ -pSourceMatrix->data[LA_W][LA_X] * fourthResult;
+// 	if (pSubMatrixArray)
+// 	{
+// 		pSubMatrixArray[0] = firstResult;
+// 		pSubMatrixArray[1] = secondResult;
+// 		pSubMatrixArray[2] = thirdResult;
+// 		pSubMatrixArray[3] = fourthResult;
+// 	}
+// }
+
+/*
+** Opposite matrix ----------------------------------------------------------------------------------
+*/
+
+// mat2		laOpposite2DMatrix(mat2 *pSourceMatrix, mat2 *pResultMatrix)
+// {
+// 	mat2	newMatrix;
+// 	float	detMat;
+
+// 	if (!pSourceMatrix)
+// 		return newMatrix;
+// 	detMat =
+// }
 
 /*
 ** Multiply matrix ----------------------------------------------------------------------------------
@@ -429,6 +452,70 @@ void	laRotate(mat3 *pSourceMatrix, vec3 *pRotateVector)
 	laMul3Dmatrix(&xRot, &yRot, &xyzRot);
 	laMul3Dmatrix(&zRot, &xyzRot, &xyzRot);
 	laMul3Dmatrix(&xyzRot, pSourceMatrix, pSourceMatrix);
+}
+
+/*
+** Scale matrix --------------------------------------------------------------------------------------
+*/
+
+mat2		lsScale2DMatrix(mat2 *pSourceMatrix, vec2 *pScaleVector, mat2 *pResultMatrix, float *pScale)
+{
+	mat2	newMatrix;
+
+	if (!pSourceMatrix)
+		return (newMatrix);
+	if (pScaleVector)
+		for (int i = 0; i < LA_2D; ++i)
+			newMatrix.data[i][i] = pSourceMatrix->data[i][i] * pScaleVector->data[i];
+	else if (pScale)
+		for (int i = 0; i < LA_2D; ++i)
+			newMatrix.data[i][i] = pSourceMatrix->data[i][i] * *pScale;
+	if (pResultMatrix)
+	{
+		*pResultMatrix = newMatrix;
+		return (*pResultMatrix);
+	}
+	return (newMatrix);
+}
+
+mat3		lsScale3DMatrix(mat3 *pSourceMatrix, vec3 *pScaleVector, mat3 *pResultMatrix, float *pScale)
+{
+	mat3	newMatrix;
+
+	if (!pSourceMatrix)
+		return (newMatrix);
+	if (pScaleVector)
+		for (int i = 0; i < LA_3D; ++i)
+			newMatrix.data[i][i] = pSourceMatrix->data[i][i] * pScaleVector->data[i];
+	else if (pScale)
+		for (int i = 0; i < LA_3D; ++i)
+			newMatrix.data[i][i] = pSourceMatrix->data[i][i] * *pScale;
+	if (pResultMatrix)
+	{
+		*pResultMatrix = newMatrix;
+		return (*pResultMatrix);
+	}
+	return (newMatrix);
+}
+
+mat4		lsScale4DMatrix(mat4 *pSourceMatrix, vec4 *pScaleVector, mat4 *pResultMatrix, float *pScale)
+{
+	mat4	newMatrix;
+
+	if (!pSourceMatrix)
+		return (newMatrix);
+	if (pScaleVector)
+		for (int i = 0; i < LA_4D; ++i)
+			newMatrix.data[i][i] = pSourceMatrix->data[i][i] * pScaleVector->data[i];
+	else if (pScale)
+		for (int i = 0; i < LA_4D; ++i)
+			newMatrix.data[i][i] = pSourceMatrix->data[i][i] * *pScale;
+	if (pResultMatrix)
+	{
+		*pResultMatrix = newMatrix;
+		return (*pResultMatrix);
+	}
+	return (newMatrix);
 }
 
 /*

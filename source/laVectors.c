@@ -6,7 +6,7 @@
 /*   By: vrichese <vrichese@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 15:00:50 by vrichese          #+#    #+#             */
-/*   Updated: 2019/10/18 20:19:16 by vrichese         ###   ########.fr       */
+/*   Updated: 2019/10/19 18:28:34 by vrichese         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,59 @@ vec4		laInit4DVector(vec4 *pSourceVector, float x, float y, float z, float w, fl
 }
 
 /*
-** Addition vector -----------------------------------------------------------------
+** Copy vectors -----------------------------------------------------------------------------------
+*/
+
+vec2		laCopy2DVector(vec2 *pSourceVector, vec2 *pResultVector)
+{
+	vec2	newVector;
+
+	if (!pSourceVector)
+		return (newVector);
+	for (int i = 0; i < LA_2D; ++i)
+		newVector.data[i] = pSourceVector->data[i];
+	if (pResultVector)
+	{
+		*pResultVector = newVector;
+		return (*pResultVector);
+	}
+	return (newVector);
+}
+
+vec3		laCopy3DVector(vec3 *pSourceVector, vec3 *pResultVector)
+{
+	vec3	newVector;
+
+	if (!pSourceVector)
+		return (newVector);
+	for (int i = 0; i < LA_3D; ++i)
+		newVector.data[i] = pSourceVector->data[i];
+	if (pResultVector)
+	{
+		*pResultVector = newVector;
+		return (*pResultVector);
+	}
+	return (newVector);
+}
+
+vec4		laCopy4DVector(vec4 *pSourceVector, vec4 *pResultVector)
+{
+	vec4	newVector;
+
+	if (!pSourceVector)
+		return (newVector);
+	for (int i = 0; i < LA_2D; ++i)
+		newVector.data[i] = pSourceVector->data[i];
+	if (pResultVector)
+	{
+		*pResultVector = newVector;
+		return (*pResultVector);
+	}
+	return (newVector);
+}
+
+/*
+** Addition vector --------------------------------------------------------------------------------
 */
 
 vec2		laAdd2DVectors(vec2 *pLeftOperand, vec2 *pRightOperand, vec2 *pResultVector)
