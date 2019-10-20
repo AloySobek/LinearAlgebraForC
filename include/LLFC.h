@@ -6,7 +6,7 @@
 /*   By: vrichese <vrichese@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 16:50:45 by vrichese          #+#    #+#             */
-/*   Updated: 2019/10/20 18:23:29 by vrichese         ###   ########.fr       */
+/*   Updated: 2019/10/20 20:25:23 by vrichese         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,7 @@ float	laGetDeterminant4DMatrix(mat4 *pSourceMatrix, float *pResult, float *pSubM
 mat2	laScale2DMatrix(mat2 *pSourceMatrix, vec2 *pScaleVector, mat2 *pResultMatrix, float *pScale);
 mat3	laScale3DMatrix(mat3 *pSourceMatrix, vec3 *pScaleVector, mat3 *pResultMatrix, float *pScale);
 mat4	laScale4DMatrix(mat4 *pSourceMatrix, vec4 *pScaleVector, mat4 *pResultMatrix, float *pScale);
+
+vec3	laMul3DVectorByMatrix(vec3 *pSourceVector, mat3 *pSourceMatrix, vec3 *pResultVector);
 
 #endif

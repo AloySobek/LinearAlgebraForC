@@ -6,7 +6,7 @@
 /*   By: vrichese <vrichese@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 15:45:14 by vrichese          #+#    #+#             */
-/*   Updated: 2019/10/20 19:33:28 by vrichese         ###   ########.fr       */
+/*   Updated: 2019/10/20 20:27:59 by vrichese         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -393,11 +393,11 @@ void	laXaxisRotation(mat3 *pSourceMatrix, float *pAngle)
 		return ;
 	null = 0.0f;
 	laInit3DMatrix(pSourceMatrix, NULL, NULL, NULL, NULL, &null);
-	pSourceMatrix->data[LA_Y][LA_Y] = cosf(*pAngle);
-	pSourceMatrix->data[LA_Z][LA_Y] = -sinf(*pAngle);
-	pSourceMatrix->data[LA_Y][LA_Z] = sinf(*pAngle);
-	pSourceMatrix->data[LA_Z][LA_Z] = cos(*pAngle);
-	pSourceMatrix->data[LA_X][LA_X] = 1.0f;
+	pSourceMatrix->data[LA_Y][LA_Y] += cosf(*pAngle);
+	pSourceMatrix->data[LA_Z][LA_Y] += -sinf(*pAngle);
+	pSourceMatrix->data[LA_Y][LA_Z] += sinf(*pAngle);
+	pSourceMatrix->data[LA_Z][LA_Z] += cos(*pAngle);
+	pSourceMatrix->data[LA_X][LA_X] += 1.0f;
 }
 
 void	laYaxisRotation(mat3 *pSourceMatrix, float *pAngle)
@@ -408,11 +408,11 @@ void	laYaxisRotation(mat3 *pSourceMatrix, float *pAngle)
 		return ;
 	null = 0.0f;
 	laInit3DMatrix(pSourceMatrix, NULL, NULL, NULL, NULL, &null);
-	pSourceMatrix->data[LA_X][LA_X] = cosf(*pAngle);
-	pSourceMatrix->data[LA_Z][LA_X] = sinf(*pAngle);
-	pSourceMatrix->data[LA_X][LA_Z] = -sinf(*pAngle);
-	pSourceMatrix->data[LA_Z][LA_Z] = cosf(*pAngle);
-	pSourceMatrix->data[LA_Y][LA_Y] = 1.0f;
+	pSourceMatrix->data[LA_X][LA_X] += cosf(*pAngle);
+	pSourceMatrix->data[LA_Z][LA_X] += sinf(*pAngle);
+	pSourceMatrix->data[LA_X][LA_Z] += -sinf(*pAngle);
+	pSourceMatrix->data[LA_Z][LA_Z] += cosf(*pAngle);
+	pSourceMatrix->data[LA_Y][LA_Y] += 1.0f;
 }
 
 void	laZaxisRotation(mat3 *pSourceMatrix, float *pAngle)
@@ -423,11 +423,11 @@ void	laZaxisRotation(mat3 *pSourceMatrix, float *pAngle)
 		return ;
 	null = 0.0f;
 	laInit3DMatrix(pSourceMatrix, NULL, NULL, NULL, NULL, &null);
-	pSourceMatrix->data[LA_X][LA_X] = cosf(*pAngle);
-	pSourceMatrix->data[LA_Y][LA_X] = -sinf(*pAngle);
-	pSourceMatrix->data[LA_X][LA_Y] = cosf(*pAngle);
-	pSourceMatrix->data[LA_Y][LA_Y] = sinf(*pAngle);
-	pSourceMatrix->data[LA_Z][LA_Z] = 1.0f;
+	pSourceMatrix->data[LA_X][LA_X] += cosf(*pAngle);
+	pSourceMatrix->data[LA_Y][LA_X] += sinf(*pAngle);
+	pSourceMatrix->data[LA_X][LA_Y] += -sinf(*pAngle);
+	pSourceMatrix->data[LA_Y][LA_Y] += cosf(*pAngle);
+	pSourceMatrix->data[LA_Z][LA_Z] += 1.0f;
 }
 
 void	laRotate(mat3 *pSourceMatrix, vec3 *pRotateVector)
@@ -452,7 +452,7 @@ void	laRotate(mat3 *pSourceMatrix, vec3 *pRotateVector)
 ** Scale matrix --------------------------------------------------------------------------------------
 */
 
-mat2		lsScale2DMatrix(mat2 *pSourceMatrix, vec2 *pScaleVector, mat2 *pResultMatrix, float *pScale)
+mat2		laScale2DMatrix(mat2 *pSourceMatrix, vec2 *pScaleVector, mat2 *pResultMatrix, float *pScale)
 {
 	mat2	newMatrix;
 
@@ -472,7 +472,7 @@ mat2		lsScale2DMatrix(mat2 *pSourceMatrix, vec2 *pScaleVector, mat2 *pResultMatr
 	return (newMatrix);
 }
 
-mat3		lsScale3DMatrix(mat3 *pSourceMatrix, vec3 *pScaleVector, mat3 *pResultMatrix, float *pScale)
+mat3		laScale3DMatrix(mat3 *pSourceMatrix, vec3 *pScaleVector, mat3 *pResultMatrix, float *pScale)
 {
 	mat3	newMatrix;
 
@@ -492,7 +492,7 @@ mat3		lsScale3DMatrix(mat3 *pSourceMatrix, vec3 *pScaleVector, mat3 *pResultMatr
 	return (newMatrix);
 }
 
-mat4		lsScale4DMatrix(mat4 *pSourceMatrix, vec4 *pScaleVector, mat4 *pResultMatrix, float *pScale)
+mat4		laScale4DMatrix(mat4 *pSourceMatrix, vec4 *pScaleVector, mat4 *pResultMatrix, float *pScale)
 {
 	mat4	newMatrix;
 
@@ -518,22 +518,23 @@ mat4		lsScale4DMatrix(mat4 *pSourceMatrix, vec4 *pScaleVector, mat4 *pResultMatr
 
 // int main(int argc, char **argv)
 // {
-// 	vec3 one, one2;
-// 	vec3 two, two2;
-// 	vec3 three, three2;
-// 	mat3 matrix, matrix2;
-// 	float test = 0.0f;
+// 	vec3 one;
+// 	vec3 two;
+// 	vec3 three;
+// 	vec3 rot;
+// 	mat3 matrix;
+// 	mat3 test;
 
-// 	laInit3DVector(&one, 3.0f, 4.0f, 1.0f, NULL);
-// 	laInit3DVector(&two, 10.0f, 5.0f, 7.0f, NULL);
-// 	laInit3DVector(&three, 10.0f, 15.0f, 17.0f, NULL);
-
-// 	laInit3DVector(&one2, 3.0f, 4.0f, 1.0f, NULL);
-// 	laInit3DVector(&two2, 10.0f, 5.0f, 7.0f, NULL);
-// 	laInit3DVector(&three2, 10.0f, 15.0f, 17.0f, NULL);
+// 	laInit3DVector(&one, 1.0f, 0.0f, 0.0f, NULL);
+// 	laInit3DVector(&two, 0.0f, 1.0f, 0.0f, NULL);
+// 	laInit3DVector(&three, 0.0f, 0.0f, 1.0f, NULL);
+// 	laInit3DVector(&rot, 100.0f, 2.0f, 0.0f, NULL);
 // 	laInit3DMatrix(&matrix, &one, &two, &three, NULL, NULL);
-// 	laInit3DMatrix(&matrix2, &one2, &two2, &three2, NULL, NULL);
-// 	laMul3Dmatrix(&matrix, &matrix, &matrix);
+// 	laRotate(&matrix, &rot);
+// 	laInit3DVector(&rot, 3.0f, 0.0f, 0.0f, NULL);
+// 	laMul3DVectorByMatrix(&rot, &matrix, &rot);
+// 	printf("%f %f %f\n", rot.data[LA_X], rot.data[LA_Y], rot.data[LA_Z]);
+// 	exit(1);
 // 	for (int y = 0; y < 3; ++y)
 // 	{
 // 		for (int x = 0; x < 3; ++x)
