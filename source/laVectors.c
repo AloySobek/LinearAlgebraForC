@@ -6,7 +6,7 @@
 /*   By: vrichese <vrichese@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 15:00:50 by vrichese          #+#    #+#             */
-/*   Updated: 2019/10/20 18:30:43 by vrichese         ###   ########.fr       */
+/*   Updated: 2019/10/20 19:25:13 by vrichese         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -652,29 +652,29 @@ vec3		laMul3DVectorByMatrix(vec3 *pSourceVector, mat3 *pSourceMatrix, vec3 *pRes
 ** Main for testing -------------------------------------------------------------------
 */
 
-int main(int argc, char **argv)
-{
-	vec3	one;
-	vec3	two;
-	float	z;
-	float	z1;
-	float	res;
-	float	result;
+// int main(int argc, char **argv)
+// {
+// 	vec3	one;
+// 	vec3	two;
+// 	float	z;
+// 	float	z1;
+// 	float	res;
+// 	float	result;
 
-	laInit3DVector(&one, 3.0f, 1.0f, 7.0f, NULL);
-	laInit3DVector(&two, 7.0f, 4.0f, 2.0f, NULL);
-	//printf("%10f %10f %10f\n", one.data[LA_X], one.data[LA_Y], one.data[LA_Z]);
-	//printf("%10f %10f %10f\n", two.data[LA_X], two.data[LA_Y], two.data[LA_Z]);
-	//laOpposite3DVector(&two, &two);
-	//laOpposite3DVector(&one, &one);
-	//laNormalize3DVector(&one, &one);
-	//laNormalize3DVector(&two, &two);
-	laGetMagnitude3DVector(&one, &z);
-	laGetMagnitude3DVector(&two, &z1);
-	//printf("%10f %10f %10f\n", one.data[LA_X], one.data[LA_Y], one.data[LA_Z]);
-	//printf("%10f %10f %10f\n", two.data[LA_X], two.data[LA_Y], two.data[LA_Z]);
-	laDotProduct3DVectors(&one , &two, &res);
-	laGetCosBetween3DVectors(&one, &two, &result);
-	printf("%f\n", res);
-	printf("%f\n", result * z * z1);
-}
+// 	laInit3DVector(&one, 3.0f, 1.0f, 7.0f, NULL);
+// 	laInit3DVector(&two, 7.0f, 4.0f, 2.0f, NULL);
+// 	//printf("%10f %10f %10f\n", one.data[LA_X], one.data[LA_Y], one.data[LA_Z]);
+// 	//printf("%10f %10f %10f\n", two.data[LA_X], two.data[LA_Y], two.data[LA_Z]);
+// 	//laOpposite3DVector(&two, &two);
+// 	//laOpposite3DVector(&one, &one);
+// 	//laNormalize3DVector(&one, &one);
+// 	//laNormalize3DVector(&two, &two);
+// 	laGetMagnitude3DVector(&one, &z);
+// 	laGetMagnitude3DVector(&two, &z1);
+// 	//printf("%10f %10f %10f\n", one.data[LA_X], one.data[LA_Y], one.data[LA_Z]);
+// 	//printf("%10f %10f %10f\n", two.data[LA_X], two.data[LA_Y], two.data[LA_Z]);
+// 	laDotProduct3DVectors(&one , &two, &res);
+// 	laGetCosBetween3DVectors(&one, &two, &result);
+// 	printf("%f\n", res);
+// 	printf("%f\n", result * z * z1);
+// }

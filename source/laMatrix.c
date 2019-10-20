@@ -6,7 +6,7 @@
 /*   By: vrichese <vrichese@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 15:45:14 by vrichese          #+#    #+#             */
-/*   Updated: 2019/10/20 18:08:42 by vrichese         ###   ########.fr       */
+/*   Updated: 2019/10/20 19:33:28 by vrichese         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -361,30 +361,24 @@ float		laGetDeterminant3DMatrix(mat3 *pSourceMatrix, float *pResult, float *pSub
 ** Multiply matrix ----------------------------------------------------------------------------------
 */
 
-void	laMul3Dmatrix(mat3 *pLeftOperand, mat3 *pRightOperand, mat3 *pResultMatrix)
+mat3		laMul3Dmatrix(mat3 *pLeftOperand, mat3 *pRightOperand, mat3 *pResultMatrix)
 {
-	mat3	tmp;
-	float	total;
-	int		iter;
-	int		x;
-	int		y;
+	mat3	newMatrix;
+	float	fill = 0.0f;
 
-	total = 0.0f;
-	if (pLeftOperand == pResultMatrix)
+	laInit3DMatrix(&newMatrix, NULL, NULL, NULL, NULL, &fill);
+	if (!pLeftOperand || !pRightOperand)
+		return (newMatrix);
+	for (int y = 0; y < LA_3D; ++y)
+		for(int x = 0; x < LA_3D; ++x)
+			for (int i = 0; i < LA_3D; ++i)
+				newMatrix.data[y][x] += pLeftOperand->data[i][x] * pRightOperand->data[y][i];
+	if (pResultMatrix)
 	{
-		laInit3DMatrix(&tmp, NULL, NULL, NULL, NULL, &total);
-		laCopy3DMatrix(pLeftOperand, &tmp);
+		*pResultMatrix = newMatrix;
+		return (*pResultMatrix);
 	}
-	else
-		tmp = *pResultMatrix;
-	x = -1;
-	while (++x < 3 && (y = -1))
-		while (++y < 3 && (iter = -1) && (total = 0.0f) > -1)
-		{
-			while (++iter < 3)
-				total += tmp.data[y][iter] * pRightOperand->data[iter][x];
-			pResultMatrix->data[y][x] = total;
-		}
+	return (newMatrix);
 }
 
 /*
@@ -524,20 +518,22 @@ mat4		lsScale4DMatrix(mat4 *pSourceMatrix, vec4 *pScaleVector, mat4 *pResultMatr
 
 // int main(int argc, char **argv)
 // {
-// 	vec3 one;
-// 	vec3 two;
-// 	vec3 three;
-// 	vec3 rot;
-// 	mat3 matrix;
+// 	vec3 one, one2;
+// 	vec3 two, two2;
+// 	vec3 three, three2;
+// 	mat3 matrix, matrix2;
 // 	float test = 0.0f;
 
-// 	laInit3DVector(&one, 1.0f, 0.0f, 0.0f, NULL);
+// 	laInit3DVector(&one, 3.0f, 4.0f, 1.0f, NULL);
+// 	laInit3DVector(&two, 10.0f, 5.0f, 7.0f, NULL);
+// 	laInit3DVector(&three, 10.0f, 15.0f, 17.0f, NULL);
 
-// 	laInit3DVector(&two, 0.0f, 1.0f, 0.0f, NULL);
-// 	laInit3DVector(&three, 0.0f, 0.0f, 1.0f, NULL);
-// 	laInit3DVector(&rot, 30.0f, 0.0f, 0.0f, NULL);
+// 	laInit3DVector(&one2, 3.0f, 4.0f, 1.0f, NULL);
+// 	laInit3DVector(&two2, 10.0f, 5.0f, 7.0f, NULL);
+// 	laInit3DVector(&three2, 10.0f, 15.0f, 17.0f, NULL);
 // 	laInit3DMatrix(&matrix, &one, &two, &three, NULL, NULL);
-// 	laRotate(&matrix, &rot);
+// 	laInit3DMatrix(&matrix2, &one2, &two2, &three2, NULL, NULL);
+// 	laMul3Dmatrix(&matrix, &matrix, &matrix);
 // 	for (int y = 0; y < 3; ++y)
 // 	{
 // 		for (int x = 0; x < 3; ++x)
