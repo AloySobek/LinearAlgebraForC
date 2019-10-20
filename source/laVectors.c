@@ -6,7 +6,7 @@
 /*   By: vrichese <vrichese@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 15:00:50 by vrichese          #+#    #+#             */
-/*   Updated: 2019/10/19 18:28:34 by vrichese         ###   ########.fr       */
+/*   Updated: 2019/10/20 18:30:43 by vrichese         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -624,6 +624,28 @@ void		laCrossProduct3DVectors(vec3 *pBasisVector, vec3 *pLeftVector, vec3 *pRigh
 	pResultVector->data[LA_Y] = -subMatrix[1];
 	pResultVector->data[LA_Z] = subMatrix[2];
 
+}
+
+/*
+** Multiply vector by matrix
+*/
+
+vec3		laMul3DVectorByMatrix(vec3 *pSourceVector, mat3 *pSourceMatrix, vec3 *pResultVector)
+{
+	vec3	newVector;
+
+	if (!pSourceVector || !pSourceMatrix)
+		return (newVector);
+	for (int i = 0; i < LA_3D; ++i)
+		newVector.data[i] = pSourceVector->data[LA_X] * pSourceMatrix->data[i][LA_X]
+								+ pSourceVector->data[LA_Y] * pSourceMatrix->data[i][LA_Y]
+									+ pSourceVector->data[LA_Z] * pSourceMatrix->data[i][LA_Z];
+	if (pResultVector)
+	{
+		*pResultVector = newVector;
+		return (*pResultVector);
+	}
+	return (newVector);
 }
 
 /*
